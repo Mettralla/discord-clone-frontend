@@ -15,8 +15,8 @@ function getProfile() {
         if (response.status === 200) {
             return response.json().then(data => {
                 document.getElementById("username").innerText = data.username;
-                document.getElementById("image").innerText = data.image;
-                document.getElementById("user_id").innerText = data.user_id;
+                get_image(data);
+                document.getElementById("user_id").innerText = `#${data.user_id}`;
         })
         } else {
             return response.json().then(data => {
@@ -50,4 +50,20 @@ function logout() {
     .catch(error => {
         document.getElementById("message").innerHTML = "An error occurred.";
     });
+}
+
+function get_image(data) {
+    const profilePic = document.getElementById("image");
+    if (data.image) {
+        profilePic.src = data.image;
+    } else {
+        profilePic.style.backgroundColor = "#282b31";
+        profilePic.style.padding = "1px";
+        profilePic.style.display = "flex";
+        profilePic.style.alignItems = "center";
+        profilePic.style.justifyContent = "center";
+        profilePic.style.color = "white";
+        profilePic.style.fontSize = "2rem";
+        profilePic.alt = data.username[0].toUpperCase();
+    }
 }

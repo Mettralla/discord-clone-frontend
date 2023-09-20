@@ -61,7 +61,7 @@ a {
     text-decoration: none;
 }
 
-#login-btn {
+#auth-btn {
     background-color: #556ecb;
     color: #FFFFFF;
     padding: 10px 20px;
@@ -70,7 +70,7 @@ a {
     border-radius: 5px;
     cursor: pointer;
     margin-top: 2vh;
-    padding: 0.6rem 6.5rem;
+    padding: 0.6rem 6.2rem;
 }
 
 .info-text {
@@ -78,7 +78,7 @@ a {
     margin-bottom: 0%;
 }
 
-#login-btn:hover {
+#auth-btn:hover {
     background-color: #677BC4;
 }
 

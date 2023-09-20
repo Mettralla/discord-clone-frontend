@@ -1,14 +1,14 @@
 document.getElementById("authForm").addEventListener("submit", function (event) {
     event.preventDefault();
-    login()
+    register();
 });
 
-function login() {
+function register() {
     const data = {
         username: document.getElementById("username").value,
         password: document.getElementById("password").value,
-    };
-    fetch("http://127.0.0.1:5000/auth/login", {
+    }
+    fetch("http://127.0.0.1:5000/auth/register", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -17,9 +17,10 @@ function login() {
         credentials: 'include'
     })
     .then(response => {
-        if (response.status === 200) {
+        if (response.status === 201) {
             return response.json().then(data => {
-                window.location.href = "profile.html";
+                document.getElementById("message").innerHTML = data.message;
+                window.location.href = "login.html";
             });
         } else {
             return response.json().then(data => {
@@ -33,4 +34,3 @@ function login() {
         document.getElementById("message").innerHTML = "Ocurrio un error";
     });
 }
-

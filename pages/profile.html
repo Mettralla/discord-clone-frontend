@@ -3,17 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/profile.css">
     <title>Profile</title>
 </head>
 <body>
-    <div id="message">
-        <h1>User Profile</h1>
-        <p><strong>Username:</strong> <span id="username"></span></p>
-        <p><strong>Id:</strong> <span id="user_id"></span></p>
-        <p><strong>Image:</strong> <span id="image"></span></p>
+    <div class="perfil-card">
+        <div class="perfil-header">
+            <div class="perfil-image">
+                <img class="perfil-image" id="image" src="" alt="">
+            </div>
+        </div>
+        <div class="perfil-data">
+            <h2 id="username"></h2>
+            <p id="user_id"></p>
+            <hr>
+            <p>Editar Perfil</p>
+            <p>Cambiar contraseña</p>
+            <button id="logout">Logout</button>
+            <div id="message">
+        </div>
     </div>
-
-    <button id="logout">Logout</button>
 
     <script src="../js/profile.js"></script>
 </body>
