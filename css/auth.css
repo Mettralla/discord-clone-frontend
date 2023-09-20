@@ -24,7 +24,6 @@ body {
     align-items: center;
 }
 
-/* Estilos para el formulario y sus elementos */
 form {
     text-align: center;
 }
@@ -64,7 +63,6 @@ a {
 #auth-btn {
     background-color: #556ecb;
     color: #FFFFFF;
-    padding: 10px 20px;
     border: none;
     font-size: medium;
     border-radius: 5px;
@@ -73,13 +71,14 @@ a {
     padding: 0.6rem 6.2rem;
 }
 
+#auth-btn:hover {
+    background-color: #677BC4;
+}
+
+
 .info-text {
     color: #FFFFFF;
     margin-bottom: 0%;
-}
-
-#auth-btn:hover {
-    background-color: #677BC4;
 }
 
 #message {

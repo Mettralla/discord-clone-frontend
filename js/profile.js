@@ -4,6 +4,8 @@ window.addEventListener('load', function () {
 
 document.getElementById("logout").addEventListener("click", logout);
 
+document.getElementById("return").addEventListener("click", function() { window.location.href = "../index.html"; });
+
 function getProfile() {
     const url = "http://127.0.0.1:5000/auth/profile";
     

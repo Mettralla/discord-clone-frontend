@@ -72,6 +72,22 @@ p, h2, hr {
     float: right;
 }
 
-#logout {
+#logout:hover {
+    background-color: #677BC4;
+}
+
+#return {
+    background-color: white;
+    color: #556ecb;
+    margin-right: 0.5rem;
+    border: none;
+    font-size: medium;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 0.7rem;
+    float: right;
+}
+
+#return:hover {
     background-color: #677BC4;
 }
