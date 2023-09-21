@@ -377,11 +377,13 @@ function open_channel_chatbox(channel_id) {
     load_channel_messages(channel_id);
 }
 
-function addMessage(message) {
+function addMessage(username, message, date) {
+    const fDate = new Date(date);
     const chatBox = document.getElementById("chatBox");
     const newMessage = document.createElement("p");
     newMessage.classList.add("message");
-    newMessage.textContent = message;
+    newMessage.textContent = `>> ${username} (${fDate.getDate()}/${fDate.getMonth()} ${fDate.getHours()}:${fDate.getMinutes()}): ${message}`;
+    
     chatBox.appendChild(newMessage);
     chatBox.scrollTop = chatBox.scrollHeight;
 }
@@ -433,7 +435,7 @@ function load_channel_messages(channel_id) {
 
                 // Agrega cada mensaje al chatbox usando la función addMessage
                 messages.forEach(message => {
-                    addMessage(message.message_body);
+                    addMessage(message.username, message.message_body, message.creation_date);
                 });
             });
         } else {
