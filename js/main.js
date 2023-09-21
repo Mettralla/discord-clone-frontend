@@ -88,7 +88,6 @@ function load_user_servers() {
         if (response.status === 200) {
             return response.json().then(data => {
                 const serverList = document.getElementById("server-list");
-                // serverList.innerHTML = ""; // Limpia el contenido anterior
 
                 data.servers.forEach(server => {
                     const serverDiv = document.createElement("div");
@@ -108,6 +107,7 @@ function load_user_servers() {
                     // Agrega un evento de clic al div
                     serverDiv.addEventListener('click', function () {
                         const server_id = server.server_id;
+                        cleanScreen()
                         // Llama a otra función y pasa el server_id
                         get_channels(server_id);
                     });
@@ -177,7 +177,10 @@ function get_channels_in_server(server_id) {
                     channelNameP.textContent = `# ${channel.channel_name}`;
 
                     channelDiv.addEventListener('click', function () {
-                        alert(`Canal seleccionado: ${channel.channel_name}`);
+                        cleanChatbox()
+                        // alert(channel.channel_id)
+                        open_channel_chatbox(channel.channel_id)
+                        // alert(`Canal seleccionado: ${channel.channel_id}`);
                     });
 
                     channelDiv.appendChild(channelNameP);
@@ -304,5 +307,144 @@ function createChannel(server_id) {
     })
     .catch(error => {
         alert("Ocurrio un error");
+    });
+}
+
+function open_channel_chatbox(channel_id) {
+    // Crear el contenedor principal con clase "chat-container"
+    const chatContainerDiv = document.createElement("div");
+    chatContainerDiv.classList.add("chat-container");
+
+    // Crear el cuadro de chat con clase "chat-box" y id "chatBox"
+    const chatBoxDiv = document.createElement("div");
+    chatBoxDiv.classList.add("chat-box");
+    chatBoxDiv.id = "chatBox";
+
+    // Crear el campo de entrada de texto con tipo "text" y id "messageInput" con un atributo de marcador de posición (placeholder)
+    const messageInput = document.createElement("input");
+    messageInput.setAttribute("type", "text");
+    messageInput.id = "messageInput";
+    messageInput.setAttribute("placeholder", "Escribe un mensaje...");
+
+    // Crear el botón con id "sendBtn" y texto "Enviar" y agregar un evento de clic
+    const sendButton = document.createElement("button");
+    sendButton.id = "sendBtn";
+    sendButton.textContent = "Enviar";
+    sendButton.addEventListener("click", sendMessage);
+
+    function sendMessage() {
+        const messageInput = document.getElementById("messageInput");
+        const message = messageInput.value.trim();
+        const data = {
+            message_body: message,
+            channel_id: channel_id,
+        }
+
+        fetch("http://127.0.0.1:5000/messages", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+            credentials: 'include'
+        })
+        .then(response => {
+            if (response.status === 201) {
+                return response.json().then(data => {
+                    alert(data.message);
+                    // window.location.href = "../index.html";
+                });
+            } else {
+                return response.json().then(data => {
+                    alert(data.error.name);
+                })
+            }
+        })
+        .catch(error => {
+            alert("Ocurrio un error");
+        });
+    }
+
+    // Agregar todos los elementos al contenedor principal
+    chatContainerDiv.appendChild(chatBoxDiv);
+    chatContainerDiv.appendChild(messageInput);
+    chatContainerDiv.appendChild(sendButton);
+
+    // Insertar el contenedor principal en el cuerpo (body) del documento
+    document.body.appendChild(chatContainerDiv);
+
+    // Cargar los mensajes del canal correspondiente
+    load_channel_messages(channel_id);
+}
+
+function addMessage(message) {
+    const chatBox = document.getElementById("chatBox");
+    const newMessage = document.createElement("p");
+    newMessage.classList.add("message");
+    newMessage.textContent = message;
+    chatBox.appendChild(newMessage);
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function cleanScreen() {
+    // Eliminar el div con ID "channel-list" si existe
+    const channelListDiv = document.getElementById("channel-list");
+    if (channelListDiv) {
+        channelListDiv.parentNode.removeChild(channelListDiv);
+    }
+
+    // Eliminar el div con ID "add-channel" si existe
+    const addChannelDiv = document.getElementById("add-channel");
+    if (addChannelDiv) {
+        addChannelDiv.parentNode.removeChild(addChannelDiv);
+    }
+
+    // Eliminar todos los elementos con la clase "chat-container" y sus hijos
+    const chatContainers = document.querySelectorAll(".chat-container");
+    chatContainers.forEach(function (container) {
+        container.parentNode.removeChild(container);
+    });
+}
+
+function cleanChatbox() {
+    // Eliminar todos los elementos con la clase "chat-container" y sus hijos
+    const chatContainers = document.querySelectorAll(".chat-container");
+    chatContainers.forEach(function (container) {
+        container.parentNode.removeChild(container);
+    });
+}
+
+function load_channel_messages(channel_id) {
+    fetch(`http://127.0.0.1:5000/messages?channel_id=${channel_id}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+    })
+    .then(response => {
+        if (response.status === 200) {
+            return response.json().then(data => {
+                const messages = data.messages; // Supongamos que los mensajes están en data.messages
+                const chatBox = document.getElementById("chatBox");
+                
+                // Limpia el chatbox antes de agregar los mensajes
+                chatBox.innerHTML = "";
+
+                // Agrega cada mensaje al chatbox usando la función addMessage
+                messages.forEach(message => {
+                    addMessage(message.message_body);
+                });
+            });
+        } else {
+            return response.json().then(data => {
+                if (errorData.error) {
+                    document.getElementById("message").innerHTML = data.error.description;
+                }
+            })
+        }
+    })
+    .catch(error => {
+        document.getElementById("message").innerHTML = "Ocurrió un error";
     });
 }
