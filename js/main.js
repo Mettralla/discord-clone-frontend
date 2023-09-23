@@ -62,11 +62,8 @@ function getProfileName() {
                 document.getElementById("profile-card").innerText = data.username;
         })
         } else {
-            return response.json().then(data => {
-                profileCard = document.getElementById("profile-card");
-                profileCard.onclick = goToLogin();
-                profileCard.innerText = "Login"
-            });
+            // Redirige al usuario a la página de inicio de sesión en caso de error
+            window.location.href = "../pages/login.html";
         }
     })
     .catch(error => {
