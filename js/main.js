@@ -344,6 +344,10 @@ function open_channel_chatbox(channel_id) {
   function sendMessage() {
     const messageInput = document.getElementById("messageInput");
     const message = messageInput.value.trim();
+
+    // Get the user's username from the profile
+    const username = document.getElementById("profile-card").innerText;
+
     const data = {
       message_body: message,
       channel_id: channel_id,
@@ -360,8 +364,10 @@ function open_channel_chatbox(channel_id) {
       .then((response) => {
         if (response.status === 201) {
           return response.json().then((data) => {
-            alert(data.message);
-            // window.location.href = "../index.html";
+            // Add the user's own message to the chat immediately after sending it
+            addMessage(username, message, new Date().toISOString());
+            messageInput.value = ""; // Clear the input field
+            // alert(data.message);
           });
         } else {
           return response.json().then((data) => {
@@ -370,7 +376,7 @@ function open_channel_chatbox(channel_id) {
         }
       })
       .catch((error) => {
-        alert("Ocurrio un error");
+        alert("Ocurrió un error");
       });
   }
 
