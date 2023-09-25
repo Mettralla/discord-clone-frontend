@@ -203,7 +203,7 @@ function get_channels_in_server(server_id) {
       }
     })
     .catch((error) => {
-      document.getElementById("message").innerHTML = "Ocurrió un error.";
+      alert("Ocurrió un error.");
     });
 }
 
