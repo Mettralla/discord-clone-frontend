@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/auth.css">
+    <title>Edit Profile</title>
+</head>
+<body>
+    <!-- <div class="perfil-card">
+            <div class="perfil-header"> 
+            <h1>Editar Perfil</h1>
+                <div class="perfil-image">
+                <img class="perfil-image" id="image" src="" alt="">
+            </div> 
+            </div> 
+        <div class="perfil-data">
+            <h2 id="username"></h2>
+            <p id="user_id"></p>
+            <hr>
+            <a href="edit-profile.html">Editar Perfil</a>
+            <a href="edit-password.html">Cambiar contraseña</a>
+            <button id="logout">Logout</button>
+            <button id="return">Volver</button>
+            <div id="message">
+        </div>
+    </div> -->
+
+    <div class="container">
+        <h1 id="title">Editar Perfil</h1>
+        <form id="authForm">
+            <div class="form-field">
+                <label for="username">Username:</label>
+                <input class="input-box" type="text" name="username" id="username" required>
+            </div>
+
+            <!-- <div class="form-field">
+                <label for="avatar">Avatar:</label>
+                <input class="input-box" type="file" accept="image/*" name="avatar" id="avatar">
+            </div> -->
+            <button type="submit" id="auth-btn">Editar</button>
+        </form>
+    </div>
+
+    <script src="../js/edit-profile.js"></script>
+</body>
+</html>

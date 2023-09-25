@@ -4,6 +4,8 @@ window.addEventListener('load', function () {
 
 document.getElementById("logout").addEventListener("click", logout);
 
+document.getElementById("edit").addEventListener("click", edit_user);
+
 document.getElementById("return").addEventListener("click", function() { window.location.href = "../index.html"; });
 
 function getProfile() {
@@ -68,4 +70,9 @@ function get_image(data) {
         profilePic.style.fontSize = "2rem";
         profilePic.alt = data.username[0].toUpperCase();
     }
+}
+
+function edit_user() {
+    const userId = document.getElementById('user_id').textContent;
+    window.location.href = `edit_profile.html?user_id=${userId.slice(1)}`;
 }
