@@ -425,20 +425,20 @@ function addMessage(username, message, date) {
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-function editMessage(messageElement, originalMessage) {
-  const newMessage = prompt("Editar mensaje:", originalMessage);
-  if (newMessage !== null) {
-    const messageContent = messageElement.querySelector("p");
-    messageContent.textContent = newMessage;
-  }
-}
+// function editMessage(messageElement, originalMessage) {
+//   const newMessage = prompt("Editar mensaje:", originalMessage);
+//   if (newMessage !== null) {
+//     const messageContent = messageElement.querySelector("p");
+//     messageContent.textContent = newMessage;
+//   }
+// }
 
-function deleteMessage(messageElement) {
-  const confirmDelete = confirm("¿Seguro que deseas eliminar este mensaje?");
-  if (confirmDelete) {
-    messageElement.remove();
-  }
-}
+// function deleteMessage(messageElement) {
+//   const confirmDelete = confirm("¿Seguro que deseas eliminar este mensaje?");
+//   if (confirmDelete) {
+//     messageElement.remove();
+//   }
+// }
 
 function cleanScreen() {
   // Eliminar el div con ID "channel-list" si existe
