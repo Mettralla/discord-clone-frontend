@@ -250,10 +250,10 @@ label {
 .chat-box {
   height: 90%;
   overflow-y: scroll;
-  border: 1px solid lightgrey;
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 10px;
+  border-radius: 4px;
+  padding: 20px;
+  padding-left: 10px;
+  margin-bottom: 20px;
 }
 
 #messageInput {
@@ -278,21 +278,20 @@ label {
   padding: 10px;
   border-radius: 4px;
   box-shadow: 2px 2px 1px 1px black;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .message:hover {
   transform: scale(1.012);
-  transition: background-color 0.3s, transform 0.3s;
 }
 
 .message button {
   background-color: transparent;
   color: rebeccapurple;
   border: none;
-  margin: 0 5px;
+  padding: 3px;
   cursor: pointer;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 10px;
