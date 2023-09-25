@@ -248,60 +248,57 @@ label {
 }
 
 .chat-box {
-  background-color: #333843;
-  color: white;
-  border: 1px solid #556ecb;
-  border-radius: 4px;
+  height: 90%;
+  overflow-y: scroll;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
   padding: 10px;
   margin-bottom: 10px;
-  max-height: 400px;
-  overflow-y: scroll;
 }
 
 #messageInput {
-  width: 75%;
+  width: 85%;
   padding: 10px;
-  border: 1px solid #556ecb;
+  border: 1px solid #ccc;
   border-radius: 5px;
   margin-right: 10px;
-  color: white;
-  background-color: #333843;
 }
 
 #sendBtn {
-  padding: 10px 20px;
+  padding: 10px;
   background-color: #556ecb;
   color: white;
   border: none;
   border-radius: 5px;
-  cursor: pointer;
-}
-
-#sendBtn:hover {
-  background-color: #677bc4;
 }
 
 .message {
-  background-color: #556ecb;
-  color: white;
-  padding: 8px;
+  background-color: white;
+  color: #333;
+  padding: 10px;
   border-radius: 4px;
-  margin: 10px 0;
+  box-shadow: 2px 2px 1px 1px black;
+  margin-bottom: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
 }
 
-.message p {
-  margin: 0;
+.message:hover {
+  transform: scale(1.012);
+  transition: background-color 0.3s, transform 0.3s;
 }
 
 .message button {
   background-color: transparent;
+  color: rebeccapurple;
   border: none;
-  color: rgba(0, 0, 0, 0.526);
+  margin: 0 5px;
   cursor: pointer;
-  margin-left: 3px;
-  margin-top: 3px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10px;
 }
 
 .message button:hover {
-  text-decoration: underline;
+  background-color: transparent;
+  color: cornflowerblue;
 }
