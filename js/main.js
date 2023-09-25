@@ -364,10 +364,14 @@ function open_channel_chatbox(channel_id) {
       .then((response) => {
         if (response.status === 201) {
           return response.json().then((data) => {
-            // Add the user's own message to the chat immediately after sending it
-            addMessage(username, message, new Date().toISOString());
+            // Aquí pasamos el message_id al llamar a addMessage
+            addMessage(
+              username,
+              message,
+              new Date().toISOString(),
+              data.message_id // Agrega el ID del mensaje
+            );
             messageInput.value = ""; // Clear the input field
-            // alert(data.message);
           });
         } else {
           return response.json().then((data) => {
@@ -395,12 +399,45 @@ function open_channel_chatbox(channel_id) {
 function addMessage(username, message, date) {
   const fDate = new Date(date);
   const chatBox = document.getElementById("chatBox");
-  const newMessage = document.createElement("p");
+  const newMessage = document.createElement("div");
   newMessage.classList.add("message");
-  newMessage.textContent = `>> ${username} (${fDate.getDate()}/${fDate.getMonth()} ${fDate.getHours()}:${fDate.getMinutes()}): ${message}`;
+
+  const messageContent = document.createElement("p");
+  messageContent.textContent = `>> ${username} (${fDate.getDate()}/${fDate.getMonth()} ${fDate.getHours()}:${fDate.getMinutes()}): ${message}`;
+
+  const editButton = document.createElement("button");
+  editButton.textContent = "Editar";
+  editButton.addEventListener("click", function () {
+    editMessage(newMessage, message);
+  });
+
+  const deleteButton = document.createElement("button");
+  deleteButton.textContent = "Eliminar";
+  deleteButton.addEventListener("click", function () {
+    deleteMessage(newMessage);
+  });
+
+  newMessage.appendChild(messageContent);
+  newMessage.appendChild(editButton);
+  newMessage.appendChild(deleteButton);
 
   chatBox.appendChild(newMessage);
   chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function editMessage(messageElement, originalMessage) {
+  const newMessage = prompt("Editar mensaje:", originalMessage);
+  if (newMessage !== null) {
+    const messageContent = messageElement.querySelector("p");
+    messageContent.textContent = newMessage;
+  }
+}
+
+function deleteMessage(messageElement) {
+  const confirmDelete = confirm("¿Seguro que deseas eliminar este mensaje?");
+  if (confirmDelete) {
+    messageElement.remove();
+  }
 }
 
 function cleanScreen() {
