@@ -421,7 +421,8 @@ function addMessage(username, message, date, message_id, channel_id) {
   editButton.classList.add("edit-button");
   editButton.addEventListener("click", function () {
     let msg_id = message_id
-    // editMessage(newMessage, message);
+    // const inputThing = document.getElementById("messageInput")
+    // inputThing.innerHTML = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHH"
   });
 
   const deleteButton = document.createElement("button");
@@ -430,7 +431,8 @@ function addMessage(username, message, date, message_id, channel_id) {
   deleteButton.addEventListener("click", function () {
     let msg_id = message_id
     deleteMessage(msg_id)
-    open_channel_chatbox(ch)
+    const parentElement = deleteButton.parentNode.parentNode;
+    parentElement.remove();
   });
 
   const actionsDiv = document.createElement("div");
@@ -457,6 +459,34 @@ function deleteMessage(message_id) {
     .then((response) => {
       if (response.status === 204) {
         return response.json().then((data) => {
+          alert("Mensaje Editado")
+        });
+      } else {
+        return response.json().then((data) => {
+            alert(data.error.description);
+        });
+      }
+    })
+    .catch((error) => {
+      // cleanChatbox()
+    });
+}
+
+function editMessage(message_id) {
+  const data = {
+      message: document.getElementById("message").value
+  }
+  fetch(`http://127.0.0.1:5000/messages/${message_id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+    credentials: "include",
+  })
+    .then((response) => {
+      if (response.status === 204) {
+        return response.json().then((data) => {
           alert("Mensaje eliminado")
         });
       } else {
@@ -466,7 +496,7 @@ function deleteMessage(message_id) {
       }
     })
     .catch((error) => {
-      cleanChatbox()
+      // cleanChatbox()
     });
 }
 
