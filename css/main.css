@@ -236,6 +236,13 @@ label {
   align-items: center;
 }
 
+.no-channels-message {
+  color: white;
+  margin-top: 20px;
+  margin-left: 20px;
+  font-size: 14px;
+}
+
 /* CHAT */
 
 .chat-container {
@@ -281,7 +288,6 @@ label {
   border-radius: 4px;
   box-shadow: 2px 2px 1px 1px black;
   margin-bottom: 12px;
-  font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
   position: relative;
 }
@@ -298,7 +304,7 @@ label {
 .message .content {
   margin-top: 2px;
   margin-left: 20px;
-  margin-right: 150px
+  margin-right: 150px;
 }
 
 .message .actions {
@@ -318,7 +324,6 @@ label {
 .message .header p {
   margin: 14px;
 }
-
 
 /* Estilos para el overlay (fondo oscuro detrás del popup) */
 .overlay {
@@ -363,7 +368,7 @@ label {
   padding: 10px 20px;
   margin-right: 10px;
   cursor: pointer;
-  background-color: #007BFF;
+  background-color: #007bff;
   color: #fff;
   border: none;
   border-radius: 5px;

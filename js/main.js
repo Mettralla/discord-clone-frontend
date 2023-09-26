@@ -177,33 +177,48 @@ function get_channels_in_server(server_id) {
           const channelListDiv = document.getElementById("channel-list");
           channelListDiv.innerHTML = "";
 
-          data.channels.forEach((channel) => {
-            const channelDiv = document.createElement("div");
-            channelDiv.classList.add("channel");
+          if (data.channels && data.channels.length > 0) {
+            data.channels.forEach((channel) => {
+              const channelDiv = document.createElement("div");
+              channelDiv.classList.add("channel");
 
-            const channelNameP = document.createElement("p");
-            channelNameP.classList.add("channel_name");
-            channelNameP.textContent = `# ${channel.channel_name}`;
+              const channelNameP = document.createElement("p");
+              channelNameP.classList.add("channel_name");
+              channelNameP.textContent = `# ${channel.channel_name}`;
 
-            channelDiv.addEventListener("click", function () {
-              cleanChatbox();
-              // alert(channel.channel_id)
-              open_channel_chatbox(channel.channel_id);
-              // alert(`Canal seleccionado: ${channel.channel_id}`);
+              channelDiv.addEventListener("click", function () {
+                cleanChatbox();
+                open_channel_chatbox(channel.channel_id);
+              });
+
+              channelDiv.appendChild(channelNameP);
+              channelListDiv.appendChild(channelDiv);
             });
-
-            channelDiv.appendChild(channelNameP);
-            channelListDiv.appendChild(channelDiv);
-          });
+          } else {
+            // Si no hay canales, muestra un mensaje
+            const noChannelsMessage = document.createElement("p");
+            noChannelsMessage.textContent = "No hay canales";
+            noChannelsMessage.classList.add("no-channels-message"); // Agrega la clase CSS
+            channelListDiv.appendChild(noChannelsMessage);
+          }
         });
       } else {
-        return response.json().then((data) => {
-          alert("Ocurrio un error");
-        });
+        // Manejo de error específico para cuando la solicitud no sea exitosa
+        throw new Error("No se pudo obtener la lista de canales.");
       }
     })
     .catch((error) => {
-      alert("Ocurrió un error.");
+      // Muestra el mensaje de error en la consola para depuración
+      console.error(error);
+
+      // Ahora, en lugar de mostrar el mensaje de error genérico, puedes realizar un manejo específico para el caso en que no haya canales.
+      const channelListDiv = document.getElementById("channel-list");
+      channelListDiv.innerHTML = "";
+
+      const noChannelsMessage = document.createElement("p");
+      noChannelsMessage.textContent = "No hay canales";
+      noChannelsMessage.classList.add("no-channels-message"); // Agrega la clase CSS
+      channelListDiv.appendChild(noChannelsMessage);
     });
 }
 
@@ -389,8 +404,8 @@ function open_channel_chatbox(channel_id) {
       .then((response) => {
         if (response.status === 201) {
           return response.json().then((data) => {
-            cleanChatbox()
-            open_channel_chatbox(channel_id)
+            cleanChatbox();
+            open_channel_chatbox(channel_id);
             messageInput.value = ""; // Clear the input field
           });
         } else {
@@ -418,7 +433,7 @@ function open_channel_chatbox(channel_id) {
 }
 
 function addMessage(username, message, date, message_id, channel_id) {
-  const ch = channel_id
+  const ch = channel_id;
   const fDate = new Date(date);
   const chatBox = document.getElementById("chatBox");
   const newMessage = document.createElement("div");
@@ -446,7 +461,7 @@ function addMessage(username, message, date, message_id, channel_id) {
   editButton.textContent = "Editar";
   editButton.classList.add("edit-button");
   editButton.addEventListener("click", function () {
-    let msg_id = message_id
+    let msg_id = message_id;
     // const inputThing = document.getElementById("messageInput")
     // inputThing.innerHTML = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHH"
   });
@@ -455,8 +470,8 @@ function addMessage(username, message, date, message_id, channel_id) {
   deleteButton.textContent = "Eliminar";
   deleteButton.classList.add("delete-button");
   deleteButton.addEventListener("click", function () {
-    let msg_id = message_id
-    deleteMessage(msg_id)
+    let msg_id = message_id;
+    deleteMessage(msg_id);
     const parentElement = deleteButton.parentNode.parentNode;
     parentElement.remove();
   });
@@ -485,11 +500,11 @@ function deleteMessage(message_id) {
     .then((response) => {
       if (response.status === 204) {
         return response.json().then((data) => {
-          alert("Mensaje Editado")
+          alert("Mensaje Editado");
         });
       } else {
         return response.json().then((data) => {
-            alert(data.error.description);
+          alert(data.error.description);
         });
       }
     })
@@ -500,8 +515,8 @@ function deleteMessage(message_id) {
 
 function editMessage(message_id) {
   const data = {
-      message: document.getElementById("message").value
-  }
+    message: document.getElementById("message").value,
+  };
   fetch(`http://127.0.0.1:5000/messages/${message_id}`, {
     method: "PATCH",
     headers: {
@@ -513,11 +528,11 @@ function editMessage(message_id) {
     .then((response) => {
       if (response.status === 204) {
         return response.json().then((data) => {
-          alert("Mensaje eliminado")
+          alert("Mensaje eliminado");
         });
       } else {
         return response.json().then((data) => {
-            alert(data.error.description);
+          alert(data.error.description);
         });
       }
     })
@@ -568,10 +583,10 @@ function load_channel_messages(channel_id) {
           if (data.messages != {}) {
             const messages = data.messages; // Supongamos que los mensajes están en data.messages
             const chatBox = document.getElementById("chatBox");
-  
+
             // Limpia el chatbox antes de agregar los mensajes
             chatBox.innerHTML = "";
-  
+
             // Agrega cada mensaje al chatbox usando la función addMessage
             messages.forEach((message) => {
               addMessage(
@@ -582,9 +597,7 @@ function load_channel_messages(channel_id) {
                 channel_id
               );
             });
-          }
-          else {
-            
+          } else {
           }
         });
       } else {
