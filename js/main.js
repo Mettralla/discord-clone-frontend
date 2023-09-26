@@ -398,11 +398,27 @@ function addMessage(username, message, date, message_id, channel_id) {
   const newMessage = document.createElement("div");
   newMessage.classList.add("message");
 
+  const headerDiv = document.createElement("div");
+  headerDiv.classList.add("header");
+
+  const usernamePara = document.createElement("p");
+  usernamePara.innerHTML = `<strong>${username}</strong>`;
+
+  const datePara = document.createElement("p");
+  datePara.innerHTML = `<strong>${fDate.getDate()}/${
+    fDate.getMonth() + 1
+  }/${fDate.getFullYear()} ${fDate.getHours()}:${fDate.getMinutes()}</strong>`;
+
+  headerDiv.appendChild(usernamePara);
+  headerDiv.appendChild(datePara);
+
   const messageContent = document.createElement("p");
-  messageContent.textContent = `>> ${username} (${fDate.getDate()}/${fDate.getMonth()} ${fDate.getHours()}:${fDate.getMinutes()}): ${message}`;
+  messageContent.innerHTML = `${message}`;
+  messageContent.classList.add("content");
 
   const editButton = document.createElement("button");
   editButton.textContent = "Editar";
+  editButton.classList.add("edit-button");
   editButton.addEventListener("click", function () {
     let msg_id = message_id
     // editMessage(newMessage, message);
@@ -410,15 +426,21 @@ function addMessage(username, message, date, message_id, channel_id) {
 
   const deleteButton = document.createElement("button");
   deleteButton.textContent = "Eliminar";
+  deleteButton.classList.add("delete-button");
   deleteButton.addEventListener("click", function () {
     let msg_id = message_id
     deleteMessage(msg_id)
     open_channel_chatbox(ch)
   });
 
+  const actionsDiv = document.createElement("div");
+  actionsDiv.classList.add("actions");
+  actionsDiv.appendChild(editButton);
+  actionsDiv.appendChild(deleteButton);
+
+  newMessage.appendChild(headerDiv);
   newMessage.appendChild(messageContent);
-  newMessage.appendChild(editButton);
-  newMessage.appendChild(deleteButton);
+  newMessage.appendChild(actionsDiv);
 
   chatBox.appendChild(newMessage);
   chatBox.scrollTop = chatBox.scrollHeight;
