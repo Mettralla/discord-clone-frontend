@@ -341,9 +341,34 @@ function open_channel_chatbox(channel_id) {
   sendButton.textContent = "Enviar";
   sendButton.addEventListener("click", sendMessage);
 
+  // Función para cambiar el color del texto al hacer clic en un canal
+  function changeTextColor(event) {
+    // Restaura el color de texto de todos los elementos de canal
+    channelItems.forEach((item) => {
+      item.style.color = "lightgrey";
+    });
+
+    // Cambia el color de texto solo del canal seleccionado
+    event.currentTarget.style.color = "#00ced1";
+  }
+
+  // Obtén todos los elementos de canal por su clase
+  const channelItems = document.querySelectorAll(".channel");
+
+  // Agrega el evento de clic a cada elemento de canal
+  channelItems.forEach((item) => {
+    item.addEventListener("click", (event) => {
+      // Evita que el evento se propague más allá del elemento de canal
+      event.stopPropagation();
+
+      // Llama a la función para cambiar el color de texto
+      changeTextColor(event);
+    });
+  });
+
   function sendMessage() {
-    const messageInput = document.getElementById("messageInput");
-    const message = messageInput.value.trim();
+    const inputField = document.getElementById("messageInput");
+    const message = inputField.value.trim();
 
     // Get the user's username from the profile
     const username = document.getElementById("profile-card").innerText;
@@ -380,7 +405,8 @@ function open_channel_chatbox(channel_id) {
         }
       })
       .catch((error) => {
-        alert("Ocurrió un error");
+        console.error("Error al enviar el mensaje:", error);
+        alert("Ocurrió un error al enviar el mensaje");
       });
   }
 
