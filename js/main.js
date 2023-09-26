@@ -16,7 +16,7 @@ function goToProfile() {
   window.location.href = "../pages/profile.html";
 }
 
-function gotToLogin() {
+function goToLogin() {
   window.location.href = "../pages/login.html";
 }
 
@@ -391,7 +391,8 @@ function open_channel_chatbox(channel_id) {
   load_channel_messages(channel_id);
 }
 
-function addMessage(username, message, date) {
+function addMessage(username, message, date, message_id, channel_id) {
+  const ch = channel_id
   const fDate = new Date(date);
   const chatBox = document.getElementById("chatBox");
   const newMessage = document.createElement("div");
@@ -403,13 +404,16 @@ function addMessage(username, message, date) {
   const editButton = document.createElement("button");
   editButton.textContent = "Editar";
   editButton.addEventListener("click", function () {
+    let msg_id = message_id
     // editMessage(newMessage, message);
   });
 
   const deleteButton = document.createElement("button");
   deleteButton.textContent = "Eliminar";
   deleteButton.addEventListener("click", function () {
-    // deleteMessage(newMessage);
+    let msg_id = message_id
+    deleteMessage(msg_id)
+    open_channel_chatbox(ch)
   });
 
   newMessage.appendChild(messageContent);
@@ -420,20 +424,29 @@ function addMessage(username, message, date) {
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-// function editMessage(messageElement, originalMessage) {
-//   const newMessage = prompt("Editar mensaje:", originalMessage);
-//   if (newMessage !== null) {
-//     const messageContent = messageElement.querySelector("p");
-//     messageContent.textContent = newMessage;
-//   }
-// }
-
-// function deleteMessage(messageElement) {
-//   const confirmDelete = confirm("¿Seguro que deseas eliminar este mensaje?");
-//   if (confirmDelete) {
-//     messageElement.remove();
-//   }
-// }
+function deleteMessage(message_id) {
+  fetch(`http://127.0.0.1:5000/messages/${message_id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  })
+    .then((response) => {
+      if (response.status === 204) {
+        return response.json().then((data) => {
+          alert("Mensaje eliminado")
+        });
+      } else {
+        return response.json().then((data) => {
+            alert(data.error.description);
+        });
+      }
+    })
+    .catch((error) => {
+      cleanChatbox()
+    });
+}
 
 function cleanScreen() {
   // Eliminar el div con ID "channel-list" si existe
@@ -474,20 +487,27 @@ function load_channel_messages(channel_id) {
     .then((response) => {
       if (response.status === 200) {
         return response.json().then((data) => {
-          const messages = data.messages; // Supongamos que los mensajes están en data.messages
-          const chatBox = document.getElementById("chatBox");
-
-          // Limpia el chatbox antes de agregar los mensajes
-          chatBox.innerHTML = "";
-
-          // Agrega cada mensaje al chatbox usando la función addMessage
-          messages.forEach((message) => {
-            addMessage(
-              message.username,
-              message.message_body,
-              message.creation_date
-            );
-          });
+          if (data.messages != {}) {
+            const messages = data.messages; // Supongamos que los mensajes están en data.messages
+            const chatBox = document.getElementById("chatBox");
+  
+            // Limpia el chatbox antes de agregar los mensajes
+            chatBox.innerHTML = "";
+  
+            // Agrega cada mensaje al chatbox usando la función addMessage
+            messages.forEach((message) => {
+              addMessage(
+                message.username,
+                message.message_body,
+                message.creation_date,
+                message.message_id,
+                channel_id
+              );
+            });
+          }
+          else {
+            
+          }
         });
       } else {
         return response.json().then((data) => {
