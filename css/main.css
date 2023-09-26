@@ -280,7 +280,7 @@ label {
   padding: 6px;
   border-radius: 4px;
   box-shadow: 2px 2px 1px 1px black;
-  /* margin-bottom: 12px; */
+  margin-bottom: 12px;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
   position: relative;
@@ -298,6 +298,7 @@ label {
 .message .content {
   margin-top: 2px;
   margin-left: 20px;
+  margin-right: 150px
 }
 
 .message .actions {
