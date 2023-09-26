@@ -49,14 +49,51 @@ function load_servers(search = null) {
     
                         const serverMembers = document.createElement("p");
                         serverMembers.textContent = `Cantidad de Miembros: ${server.members}`;
+
+                        const cardFooter = document.createElement("div");
+                        cardFooter.classList.add("card-footer");
+
+                        const joinButton = document.createElement("button");
+                            joinButton.classList.add("server-btn");
+                            joinButton.textContent = "Unirse";
+                            joinButton.id = `joinButton-${server.server_id}`; // Asigna un ID único al botón
+                            joinButton.addEventListener("click", () => {
+                                // Lógica para unirse al servidor aquí
+                                fetch(`http://127.0.0.1:5000/users/join?server_id=${server.server_id}`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                credentials: 'include'
+                                    })
+                                    .then(response => {
+                                        if (response.status === 201) {
+                                            return response.json().then(data => {
+                                                alert(`Te has unido al servidor ${server.server_name}`);
+                                                window.location.href = "/index.html";
+                                            });
+                                        } else {
+                                            return response.json().then(data => {
+                                                if (data.error) {
+                                                    data.error.description;
+                                                }
+                                            })
+                                        }
+                                    })
+                                    .catch(error => {
+                                        document.getElementById("message").innerHTML = "Ocurrio un error";
+                                    });
+                                });
     
                         serverHeader.appendChild(serverName);
                         serverInfo.appendChild(serverDescription);
                         serverInfo.appendChild(serverMembers);
                         serverCard.appendChild(serverHeader);
                         serverCard.appendChild(serverInfo);
+                        serverCard.appendChild(cardFooter);
                         serverInfo.appendChild(serverCreator);
-    
+                        cardFooter.appendChild(joinButton);
+
                         serverShowcase.appendChild(serverCard);
                     });
                 } else {

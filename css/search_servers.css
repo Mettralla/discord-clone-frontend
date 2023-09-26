@@ -42,7 +42,7 @@ main {
 }
 
 .server-info {
-    padding: 2rem;
+    padding: 1rem;
 }
 
 .server-header {
@@ -72,6 +72,26 @@ main {
     cursor: pointer;
 }
 
-#sendBtn:hover {
+#sendBtn:hover, .server-btn:hover {
     background-color: #677bc4;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 10px;
+}
+
+.server-btn {
+    padding: 15px;
+    background-color: #556ecb;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
 }

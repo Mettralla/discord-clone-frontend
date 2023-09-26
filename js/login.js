@@ -23,7 +23,7 @@ function login() {
             });
         } else {
             return response.json().then(data => {
-                if (errorData.error) {
+                if (data.error) {
                     document.getElementById("message").innerHTML = data.error.description;
                 }
             })
