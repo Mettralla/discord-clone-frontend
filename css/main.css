@@ -273,31 +273,47 @@ label {
 }
 
 .message {
+  display: flex;
+  flex-direction: column;
   background-color: white;
   color: #333;
-  padding: 10px;
+  padding: 6px;
   border-radius: 4px;
   box-shadow: 2px 2px 1px 1px black;
-  margin-bottom: 12px;
+  /* margin-bottom: 12px; */
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 16px;
+  font-size: 14px;
+  position: relative;
 }
 
 .message:hover {
-  transform: scale(1.012);
+  transform: scale(1.008);
 }
 
-.message button {
-  background-color: transparent;
-  color: rebeccapurple;
-  border: none;
-  padding: 2px;
-  cursor: pointer;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 10px;
+.message .header {
+  display: flex;
+  justify-content: space-between;
 }
 
-.message button:hover {
-  background-color: transparent;
-  color: cornflowerblue;
+.message .content {
+  margin-top: 2px;
+  margin-left: 20px;
+}
+
+.message .actions {
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 18px;
+}
+
+.edit-button,
+.delete-button {
+  margin-left: 8px;
+}
+
+.message .header p {
+  margin: 14px;
 }
