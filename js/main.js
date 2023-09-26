@@ -20,6 +20,10 @@ function goToLogin() {
   window.location.href = "../pages/login.html";
 }
 
+function goSearch() {
+  window.location.href = "../pages/search_servers.html";
+}
+
 document
   .getElementById("authForm")
   .addEventListener("submit", function (event) {

@@ -318,9 +318,9 @@ label {
   margin: 14px;
 }
 
+/* IGNORAR */
 
-/* Estilos para el overlay (fondo oscuro detrás del popup) */
-.overlay {
+/* .overlay {
   display: none;
   position: fixed;
   top: 0;
@@ -331,7 +331,7 @@ label {
   z-index: 1;
 }
 
-/* Estilos para el contenedor del popup */
+
 .popup-container {
   display: none;
   position: fixed;
@@ -345,19 +345,19 @@ label {
   z-index: 2;
 }
 
-/* Estilos para el contenido del popup */
+
 .popup-content {
   text-align: center;
 }
 
-/* Estilos para el input dentro del popup */
+
 .popup-input {
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
 }
 
-/* Estilos para los botones dentro del popup */
+
 .popup-button {
   padding: 10px 20px;
   margin-right: 10px;
@@ -372,7 +372,7 @@ label {
   background-color: #ccc;
 }
 
-/* Estilos para el botón de cerrar (X) */
+
 .popup-close {
   position: absolute;
   top: 10px;
@@ -380,4 +380,4 @@ label {
   font-size: 20px;
   cursor: pointer;
   color: #333;
-}
+} */

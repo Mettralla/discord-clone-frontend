@@ -62,3 +62,16 @@ main {
 .server-card p {
     margin: 5px 0;
 }
+
+#sendBtn {
+    padding: 10px;
+    background-color: #556ecb;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#sendBtn:hover {
+    background-color: #677bc4;
+}
