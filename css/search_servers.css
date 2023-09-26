@@ -95,3 +95,21 @@ main {
     text-align: center;
     justify-content: center;
 }
+
+.invite-btn {
+    padding: 14px;
+    background-color: white;
+    color: #556ecb;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    border: #556ecb solid 0.5px;
+}
+
+.invite-btn:hover {
+    background-color: #677BC4;
+}

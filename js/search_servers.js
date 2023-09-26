@@ -54,36 +54,48 @@ function load_servers(search = null) {
                         cardFooter.classList.add("card-footer");
 
                         const joinButton = document.createElement("button");
-                            joinButton.classList.add("server-btn");
-                            joinButton.textContent = "Unirse";
-                            joinButton.id = `joinButton-${server.server_id}`; // Asigna un ID único al botón
-                            joinButton.addEventListener("click", () => {
-                                // Lógica para unirse al servidor aquí
-                                fetch(`http://127.0.0.1:5000/users/join?server_id=${server.server_id}`, {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                credentials: 'include'
-                                    })
-                                    .then(response => {
-                                        if (response.status === 201) {
-                                            return response.json().then(data => {
-                                                alert(`Te has unido al servidor ${server.server_name}`);
-                                                window.location.href = "/index.html";
-                                            });
-                                        } else {
-                                            return response.json().then(data => {
-                                                if (data.error) {
-                                                    data.error.description;
-                                                }
-                                            })
-                                        }
-                                    })
-                                    .catch(error => {
-                                        document.getElementById("message").innerHTML = "Ocurrio un error";
-                                    });
+                        joinButton.classList.add("server-btn");
+                        joinButton.textContent = "Unirse";
+                        joinButton.id = `joinButton-${server.server_id}`; 
+                        joinButton.addEventListener("click", () => {
+                            fetch(`http://127.0.0.1:5000/users/join?server_id=${server.server_id}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            credentials: 'include'
+                                })
+                                .then(response => {
+                                    if (response.status === 201) {
+                                        return response.json().then(data => {
+                                            alert(`Te has unido al servidor ${server.server_name}`);
+                                            window.location.href = "/index.html";
+                                        });
+                                    } else {
+                                        return response.json().then(data => {
+                                            if (data.error) {
+                                                data.error.description;
+                                            }
+                                        })
+                                    }
+                                })
+                                .catch(error => {
+                                    document.getElementById("message").innerHTML = "Ocurrio un error";
                                 });
+                            });
+                        const inviteButton = document.createElement("button");
+                        inviteButton.classList.add("invite-btn");
+                        inviteButton.textContent = "Copiar Invitacion";
+                        inviteButton.addEventListener("click", () => {
+                            let inviteLink = `http://127.0.0.1:5500/pages/invite.html?server_name=${server.server_name}&server_id=${server.server_id}`;
+                            navigator.clipboard.writeText(inviteLink)
+                                .then(() => {
+                                    alert("El enlace de invitación ha sido copiado al portapapeles.");
+                                })
+                                .catch((err) => {
+                                    alert("Hubo un error al copiar el enlace de invitación.");
+                                });
+                        })
     
                         serverHeader.appendChild(serverName);
                         serverInfo.appendChild(serverDescription);
@@ -93,6 +105,7 @@ function load_servers(search = null) {
                         serverCard.appendChild(cardFooter);
                         serverInfo.appendChild(serverCreator);
                         cardFooter.appendChild(joinButton);
+                        cardFooter.appendChild(inviteButton);
 
                         serverShowcase.appendChild(serverCard);
                     });
