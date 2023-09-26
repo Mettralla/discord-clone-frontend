@@ -364,13 +364,8 @@ function open_channel_chatbox(channel_id) {
       .then((response) => {
         if (response.status === 201) {
           return response.json().then((data) => {
-            // Aquí pasamos el message_id al llamar a addMessage
-            addMessage(
-              username,
-              message,
-              new Date().toISOString(),
-              data.message_id // Agrega el ID del mensaje
-            );
+            cleanChatbox()
+            open_channel_chatbox(channel_id)
             messageInput.value = ""; // Clear the input field
           });
         } else {
@@ -408,13 +403,13 @@ function addMessage(username, message, date) {
   const editButton = document.createElement("button");
   editButton.textContent = "Editar";
   editButton.addEventListener("click", function () {
-    editMessage(newMessage, message);
+    // editMessage(newMessage, message);
   });
 
   const deleteButton = document.createElement("button");
   deleteButton.textContent = "Eliminar";
   deleteButton.addEventListener("click", function () {
-    deleteMessage(newMessage);
+    // deleteMessage(newMessage);
   });
 
   newMessage.appendChild(messageContent);
@@ -497,13 +492,12 @@ function load_channel_messages(channel_id) {
       } else {
         return response.json().then((data) => {
           if (errorData.error) {
-            document.getElementById("message").innerHTML =
-              data.error.description;
+            alert(data.error.description);
           }
         });
       }
     })
     .catch((error) => {
-      document.getElementById("message").innerHTML = "Ocurrió un error";
+      alert("Ocurrió un error");
     });
 }
