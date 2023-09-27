@@ -30,7 +30,8 @@ function getProfile() {
         })
         } else {
             return response.json().then(data => {
-                document.getElementById("message").innerHTML = data.error.description;
+                alert(data.error.description);
+                window.location.href = "../login.html";
             });
         }
     })
