@@ -242,10 +242,9 @@ label {
   color: white;
 }
 
-.active-channel {
-  color: red;
+.channel.active {
+  color: cyan;
 }
-
 
 .create-channel-screen {
   grid-area: 1 / 3 / 2 / 4;
