@@ -4,9 +4,11 @@ window.addEventListener("load", function () {
   load_user_servers();
 });
 
-document.getElementById("cancel-btn").addEventListener("click", function () {
-  window.location.href = "../index.html";
-});
+if (document.getElementById("cancel-btn")) {
+  document.getElementById("cancel-btn").addEventListener("click", function () {
+    window.location.href = "../index.html";
+  });
+}
 
 function newServerForm() {
   window.location.href = "../pages/create_server.html";
@@ -24,12 +26,14 @@ function goSearch() {
   window.location.href = "../pages/search_servers.html";
 }
 
-document
-  .getElementById("authForm")
-  .addEventListener("submit", function (event) {
-    event.preventDefault();
-    createServer();
-  });
+if (document.getElementById("authForm")) {
+  document
+    .getElementById("authForm")
+    .addEventListener("submit", function (event) {
+      event.preventDefault();
+      createServer();
+    });
+}
 
 function createServer() {
   const data = {
@@ -465,9 +469,7 @@ function addMessage(username, message, date, message_id, channel_id) {
   editButton.textContent = "Editar";
   editButton.classList.add("edit-button");
   editButton.addEventListener("click", function () {
-    let msg_id = message_id;
-    // const inputThing = document.getElementById("messageInput")
-    // inputThing.innerHTML = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHH"
+    window.location.href = `../pages/edit_message.html?message_id=${message_id}`;
   });
 
   const deleteButton = document.createElement("button");
@@ -519,7 +521,7 @@ function deleteMessage(message_id) {
 
 function editMessage(message_id) {
   const data = {
-    message: document.getElementById("message").value,
+    message: document.getElementById("new_message").value,
   };
   fetch(`http://127.0.0.1:5000/messages/${message_id}`, {
     method: "PATCH",
@@ -532,7 +534,7 @@ function editMessage(message_id) {
     .then((response) => {
       if (response.status === 204) {
         return response.json().then((data) => {
-          alert("Mensaje eliminado");
+          alert("Mensaje editado");
         });
       } else {
         return response.json().then((data) => {
@@ -541,7 +543,6 @@ function editMessage(message_id) {
       }
     })
     .catch((error) => {
-      // cleanChatbox()
     });
 }
 
@@ -616,3 +617,84 @@ function load_channel_messages(channel_id) {
       alert("Ocurrió un error");
     });
 }
+
+// function edit_window(message_id, message_body) {
+//   const createMessageScreenDiv = document.createElement("div");
+//   createMessageScreenDiv.classList.add("create-channel-screen");
+
+//   // Crear el div con clase "container"
+//   const containerDiv = document.createElement("div");
+//   containerDiv.classList.add("container");
+
+//   // Crear el título h1 con id "title"
+//   const titleH1 = document.createElement("h1");
+//   titleH1.id = "title";
+//   titleH1.textContent = "Editar Mensaje";
+
+//   // // Crear el formulario con id "authForm"
+//   const form = document.createElement("form");
+//   form.id = "authForm";
+
+//   // // Crear el div con clase "form-field"
+//   const formFieldDiv = document.createElement("div");
+//   formFieldDiv.classList.add("form-field");
+
+//   // // Crear la etiqueta "label"
+//   const label = document.createElement("label");
+//   label.setAttribute("for", "new_message");
+//   label.textContent = "Mensaje:";
+
+//   // // Crear el input con clase "input-box" y los atributos necesarios
+//   const input = document.createElement("input");
+//   input.classList.add("input-box");
+//   input.setAttribute("type", "text");
+//   input.setAttribute("name", "new_message");
+//   input.setAttribute("id", "new_message");
+//   input.setAttribute("required", true);
+//   input.value = message_body
+
+//   // // Crear el botón "Crear" con tipo "submit" y id "auth-btn"
+//   const submitButton = document.createElement("button");
+//   // submitButton.setAttribute("type", "submit");
+//   submitButton.id = "auth-btn";
+//   submitButton.textContent = "Editar";
+
+//   // // Crear el botón "Cancelar" con id "cancel-btn"
+//   const cancelButton = document.createElement("button");
+//   cancelButton.id = "cancel-btn";
+//   cancelButton.textContent = "Cancelar";
+
+//   // Agregar eventos de clic a los botones
+//   submitButton.addEventListener("click", function() {
+    
+//   });
+
+//   cancelButton.addEventListener("click", function() {
+//     const parentElement = createMessageScreenDiv.parentNode;
+//     parentElement.removeChild(createMessageScreenDiv);
+//   });
+
+//   // // Función que se ejecuta cuando se hace clic en el botón "Crear"
+//   // function onCrearButtonClick(event) {
+//   //   event.preventDefault(); // Evita que el formulario se envíe si está dentro de un formulario
+//   //   // Agrega aquí el código que deseas ejecutar cuando se hace clic en "Crear"
+//   //   createChannel(server_id);
+//   // }
+//   // Crear el div con id "message"
+//   // const messageDiv = document.createElement("div");
+//   // messageDiv.id = "message";
+
+//   // // Agregar los elementos al formulario y al div principal
+//   formFieldDiv.appendChild(label);
+//   formFieldDiv.appendChild(input);
+//   form.appendChild(formFieldDiv);
+//   form.appendChild(submitButton);
+//   form.appendChild(cancelButton);
+//   containerDiv.appendChild(titleH1);
+//   containerDiv.appendChild(form);
+//   // containerDiv.appendChild(messageDiv);
+//   createMessageScreenDiv.appendChild(containerDiv);
+
+//   // Insertar el div principal en el body
+//   document.body.appendChild(createMessageScreenDiv);
+// }
