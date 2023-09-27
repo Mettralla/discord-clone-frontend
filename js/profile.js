@@ -22,7 +22,11 @@ function getProfile() {
             return response.json().then(data => {
                 document.getElementById("username").innerText = data.username;
                 get_image(data);
-                document.getElementById("user_id").innerText = `#${data.user_id}`;
+                document.getElementById("user_id").innerText = `#${data.user_id}`
+                ;
+                if (data.image)
+                    new_route = data.image.replace("discord-clone-frontend", "")
+                    document.getElementById("image").src = new_route.replace(/\\/g, "/")
         })
         } else {
             return response.json().then(data => {
