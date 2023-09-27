@@ -12,6 +12,24 @@ body {
   min-height: 100vh;
 }
 
+.no-servers-message {
+  color: white;
+  grid-area: 1 / 2 / 2 / 4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+}
+
+.instructions-message {
+  color: white;
+  grid-area: 1 / 2 / 3 / 4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+}
+
 .server-list {
   display: flex;
   flex-direction: column;

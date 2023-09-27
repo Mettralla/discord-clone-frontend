@@ -101,50 +101,63 @@ function load_user_servers() {
     })
       .then((response) => {
         if (response.status === 200) {
-          return response.json().then((data) => {
-            const serverList = document.getElementById("server-list");
-
-            data.servers.forEach((server) => {
-              const serverDiv = document.createElement("div");
-              serverDiv.classList.add("svr");
-
-              const uServerDiv = document.createElement("div");
-              uServerDiv.classList.add("u-server");
-
-              const IconImg = document.createElement("img");
-              IconImg.src = "../img/server.png";
-              IconImg.id = "search-icon";
-
-              const serverNameP = document.createElement("p");
-              serverNameP.classList.add("svr-name");
-              serverNameP.textContent = server.server_name;
-
-              // Agrega un evento de clic al div
-              serverDiv.addEventListener("click", function () {
-                const server_id = server.server_id;
-                cleanScreen();
-                // Llama a otra función y pasa el server_id
-                get_channels(server_id);
-              });
-
-              uServerDiv.appendChild(IconImg);
-              serverDiv.appendChild(uServerDiv);
-              serverDiv.appendChild(serverNameP);
-
-              serverList.appendChild(serverDiv);
-            });
-          });
+          return response.json();
         } else {
-          return response.json().then((data) => {
-            if (errorData.error) {
-              document.getElementById("message").innerHTML =
-                data.error.description;
-            }
+          throw new Error("Server responded with an error status.");
+        }
+      })
+      .then((data) => {
+        const serverList = document.getElementById("server-list");
+
+        if (data.servers.length === 0) {
+          // Si el usuario no se ha unido a ningún servidor, muestra un mensaje
+          const noServersMessage = document.createElement("div");
+          noServersMessage.textContent =
+            "Aún no te has unido a un servidor";
+          noServersMessage.classList.add("no-servers-message");
+          document.body.appendChild(noServersMessage);
+
+          // Puedes agregar instrucciones adicionales para buscar o crear servidores aquí
+          const instructionsMessage = document.createElement("div");
+          instructionsMessage.textContent =
+            "Intenta buscar uno o crea uno propio.";
+          instructionsMessage.classList.add("instructions-message");
+          document.body.appendChild(instructionsMessage);
+        } else {
+          data.servers.forEach((server) => {
+            const serverDiv = document.createElement("div");
+            serverDiv.classList.add("svr");
+
+            const uServerDiv = document.createElement("div");
+            uServerDiv.classList.add("u-server");
+
+            const IconImg = document.createElement("img");
+            IconImg.src = "../img/server.png";
+            IconImg.id = "search-icon";
+
+            const serverNameP = document.createElement("div");
+            serverNameP.classList.add("svr-name");
+            serverNameP.textContent = server.server_name;
+
+            // Agrega un evento de clic al div
+            serverDiv.addEventListener("click", function () {
+              const server_id = server.server_id;
+              cleanScreen();
+              // Llama a otra función y pasa el server_id
+              get_channels(server_id);
+            });
+
+            uServerDiv.appendChild(IconImg);
+            serverDiv.appendChild(uServerDiv);
+            serverDiv.appendChild(serverNameP);
+
+            serverList.appendChild(serverDiv);
           });
         }
       })
       .catch((error) => {
-        document.getElementById("message").innerHTML = "Ocurrio un error";
+        console.error("Error:", error);
+        document.getElementById("message").innerHTML = "Ocurrió un error";
       });
   }
 }
@@ -364,30 +377,30 @@ function open_channel_chatbox(channel_id) {
   sendButton.textContent = "Enviar";
   sendButton.addEventListener("click", sendMessage);
 
-  // Función para cambiar el color del texto al hacer clic en un canal
-  function changeTextColor(event) {
-    // Restaura el color de texto de todos los elementos de canal
-    channelItems.forEach((item) => {
-      item.style.color = "lightgrey";
-    });
+  // // Función para cambiar el color del texto al hacer clic en un canal
+  // function changeTextColor(event) {
+  //   // Restaura el color de texto de todos los elementos de canal
+  //   channelItems.forEach((item) => {
+  //     item.style.color = "lightgrey";
+  //   });
 
-    // Cambia el color de texto solo del canal seleccionado
-    event.currentTarget.style.color = "#00ced1";
-  }
+  //   // Cambia el color de texto solo del canal seleccionado
+  //   event.currentTarget.style.color = "#00ced1";
+  // }
 
-  // Obtén todos los elementos de canal por su clase
-  const channelItems = document.querySelectorAll(".channel");
+  // // Obtén todos los elementos de canal por su clase
+  // const channelItems = document.querySelectorAll(".channel");
 
-  // Agrega el evento de clic a cada elemento de canal
-  channelItems.forEach((item) => {
-    item.addEventListener("click", (event) => {
-      // Evita que el evento se propague más allá del elemento de canal
-      event.stopPropagation();
+  // // Agrega el evento de clic a cada elemento de canal
+  // channelItems.forEach((item) => {
+  //   item.addEventListener("click", (event) => {
+  //     // Evita que el evento se propague más allá del elemento de canal
+  //     event.stopPropagation();
 
-      // Llama a la función para cambiar el color de texto
-      changeTextColor(event);
-    });
-  });
+  //     // Llama a la función para cambiar el color de texto
+  //     changeTextColor(event);
+  //   });
+  // });
 
   function sendMessage() {
     const inputField = document.getElementById("messageInput");
