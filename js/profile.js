@@ -36,7 +36,7 @@ function getProfile() {
         }
     })
     .catch(error => {
-        document.getElementById("message").innerHTML = "Ocurrió un error.";
+        alert("Ocurrió un error.");
     });
 }
 
