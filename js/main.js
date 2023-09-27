@@ -112,8 +112,7 @@ function load_user_servers() {
         if (data.servers.length === 0) {
           // Si el usuario no se ha unido a ningún servidor, muestra un mensaje
           const noServersMessage = document.createElement("div");
-          noServersMessage.textContent =
-            "Aún no te has unido a un servidor";
+          noServersMessage.textContent = "Aún no te has unido a un servidor";
           noServersMessage.classList.add("no-servers-message");
           document.body.appendChild(noServersMessage);
 
@@ -207,9 +206,19 @@ function get_channels_in_server(server_id) {
               channelNameP.classList.add("channel_name");
               channelNameP.textContent = `# ${channel.channel_name}`;
 
+              // Agregar un evento click para cambiar el estado activo del canal
               channelDiv.addEventListener("click", function () {
                 cleanChatbox();
                 open_channel_chatbox(channel.channel_id);
+
+                // Quitar la clase 'active' de todos los canales
+                const allChannels = document.querySelectorAll(".channel");
+                allChannels.forEach((ch) => {
+                  ch.classList.remove("active");
+                });
+
+                // Agregar la clase 'active' al canal actual
+                channelDiv.classList.add("active");
               });
 
               channelDiv.appendChild(channelNameP);
@@ -377,31 +386,6 @@ function open_channel_chatbox(channel_id) {
   sendButton.textContent = "Enviar";
   sendButton.addEventListener("click", sendMessage);
 
-  // // Función para cambiar el color del texto al hacer clic en un canal
-  // function changeTextColor(event) {
-  //   // Restaura el color de texto de todos los elementos de canal
-  //   channelItems.forEach((item) => {
-  //     item.style.color = "lightgrey";
-  //   });
-
-  //   // Cambia el color de texto solo del canal seleccionado
-  //   event.currentTarget.style.color = "#00ced1";
-  // }
-
-  // // Obtén todos los elementos de canal por su clase
-  // const channelItems = document.querySelectorAll(".channel");
-
-  // // Agrega el evento de clic a cada elemento de canal
-  // channelItems.forEach((item) => {
-  //   item.addEventListener("click", (event) => {
-  //     // Evita que el evento se propague más allá del elemento de canal
-  //     event.stopPropagation();
-
-  //     // Llama a la función para cambiar el color de texto
-  //     changeTextColor(event);
-  //   });
-  // });
-
   function sendMessage() {
     const inputField = document.getElementById("messageInput");
     const message = inputField.value.trim();
@@ -469,7 +453,9 @@ function addMessage(username, message, date, message_id, channel_id) {
   const datePara = document.createElement("p");
   datePara.innerHTML = `<strong>${fDate.getDate()}/${
     fDate.getMonth() + 1
-  }/${fDate.getFullYear()} ${fDate.getHours()}:${fDate.getMinutes()}</strong>`;
+  }/${fDate.getFullYear()} ${
+    fDate.getHours() + 3
+  }:${fDate.getMinutes()}</strong>`;
 
   headerDiv.appendChild(usernamePara);
   headerDiv.appendChild(datePara);
@@ -555,8 +541,7 @@ function editMessage(message_id) {
         });
       }
     })
-    .catch((error) => {
-    });
+    .catch((error) => {});
 }
 
 function cleanScreen() {
@@ -679,7 +664,7 @@ function load_channel_messages(channel_id) {
 
 //   // Agregar eventos de clic a los botones
 //   submitButton.addEventListener("click", function() {
-    
+
 //   });
 
 //   cancelButton.addEventListener("click", function() {
