@@ -84,7 +84,7 @@ function edit_user() {
             }
         })
         .catch(error => {
-            alert("Ocurrió un error.");
+            // alert("Ocurrió un error.");
         });
     }}
 
