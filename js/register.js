@@ -50,7 +50,7 @@ function register() {
         return response.json().then((data) => {
           if (data.error) {
             document.getElementById("message").innerHTML =
-              data.error.description;
+              data.error.name;
           }
         });
       }

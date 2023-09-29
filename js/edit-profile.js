@@ -51,7 +51,7 @@ function edit_user() {
                 }
             })
             .catch(error => {
-                alert("Ocurrió un error.");
+                // alert("Ocurrió un error.");
             });
             };
         reader.readAsDataURL(imageFile); // Leer la imagen como Base64
@@ -110,6 +110,6 @@ function getProfile() {
         }
     })
     .catch(error => {
-        alert("Ocurrió un error.");
+        // alert("Ocurrió un error.");
     });
 }

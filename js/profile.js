@@ -36,7 +36,7 @@ function getProfile() {
         }
     })
     .catch(error => {
-        alert("Ocurrió un error.");
+        // alert("Ocurrió un error.");
     });
 }
 
@@ -54,12 +54,12 @@ function logout() {
             });
         } else {
             return response.json().then(data => {
-                document.getElementById("message").innerHTML = data.error.description;
+                alert(data.error.description);
             });
         }
     })
     .catch(error => {
-        document.getElementById("message").innerHTML = "An error occurred.";
+        // document.getElementById("message").innerHTML = "An error occurred.";
     });
 }
 
