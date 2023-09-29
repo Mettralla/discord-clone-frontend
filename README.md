@@ -126,7 +126,7 @@ Iniciar live server en index.html
 ## ⛏️ Base de datos <a name = "der"></a>
 
 <p align="center">
- <img src=https://drive.google.com/uc?export=view&id=1jsPq7SZ-81qWtVzpnBVNL5HvJHHvHyek alt="Banner"></a>
+ <img src=https://drive.google.com/uc?export=view&id=1DBGKTcxXFvfMfp5bTjz4mP8Fu_uI7svf alt="Banner"></a>
 </p>
 
 ## ✍️ Autores <a name = "authors"></a>
